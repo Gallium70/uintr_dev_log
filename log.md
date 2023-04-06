@@ -1,5 +1,13 @@
 # 用户态中断 开发日志
 
+## 2023.4.6
+
+完成中断模式驱动的流控功能，但是吞吐量不是很稳定，从25K到156K波动。峰值大约为轮询模式的一半。
+
+异步中断模式的驱动行为比较奇怪，如果两边都同时收发，在大概三四个周期之后就会卡住，没有可以 wake 的 future ，但是 executor 里也不会再加新的 future ；如果一边收一边发，那么很快堆分配器会报错，怀疑是创建了过多的 future 或者存在内存泄漏，需要继续调试。
+
+[commit 7cfd3f9](https://github.com/duskmoon314/rCore-N/commit/7cfd3f922c2bbd3626d05cb592fee9d6e15bda96)
+
 ## 2023.3.30
 
 开启了串口硬件流控，将两个 16550 的 RTS/CTS 对接在一起，参考 [UART串口流控制（Flow control）](https://blog.csdn.net/qq_42992084/article/details/104761474) 。注意 RTS/CTS 只传输信号，不会影响串口内的发射器和接收器工作，需要驱动软件自行协调。
@@ -15,6 +23,8 @@
 每批数据的大小不超过硬件 FIFO 的尺寸即 16 字节。
 
 在这种设计和 6.25M 波特率下，轮询模式驱动可以达到 330 - 360 KB/s 吞吐量，且完全不丢数据。中断模式驱动还在修改中。
+
+[commit e2f8266](https://github.com/duskmoon314/rCore-N/commit/e2f8266b26b70e4069cca0b3b9386b1917c36f8b)
 
 ## 2023.3.23
 
