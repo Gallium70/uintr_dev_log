@@ -1,5 +1,15 @@
 # 用户态中断 开发日志
 
+## 2023.5.11
+
+阅读了 AIA 的文档，感觉 IMSIC 还是能比较方便的改到用户态的，可以参考 guest file 的设计，不过问题是现在好像没有现成的 IMSIC 实现。写了中断控制器的总结和新的通信框架文档。
+
+开始接网卡，先尝试复现 [10G AXI Ethernet Checksum Offload Example Design](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/2425749532/10G+AXI+Ethernet+Checksum+Offload+Example+Design) 里面的设计（把网卡 IP 接到 PS 核上）；遇到了一些 IP 问题，或许还是应该考虑做个 PCIe 根然后接成品网卡？但那样大概得自己实现 IMSIC 了，工作量可能更大。
+
+## 2023.5.4
+
+五一休假。
+
 ## 2023.4.27
 
 实现了一版不带软件缓冲区的异步驱动，改用了futures crate里面的 Stream 和 Sink API ，在中断中直接唤醒应用端的读/写任务，不再从缓冲区搬运。相比有缓冲版本性能有所提升，大致达到有缓冲的中断模式驱动的水平，但距离轮询的性能还是差距较大。PLIC 完成部分采用了 TKF 提出的类 LR-SC 循环操作。
