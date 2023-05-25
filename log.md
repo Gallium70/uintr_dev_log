@@ -1,5 +1,13 @@
 # 用户态中断 开发日志
 
+## 2023.5.25
+
+把 10G 网卡和 DMA 连到 Rocket 核上，能够生成比特流了。连的过程中发现了另一个 10G 网卡的样例项目 [ZCU102 PS and PL based 1G/10G Ethernet](https://github.com/Xilinx-Wiki-Projects/ZCU102-Ethernet/) ，没有之前项目里的一堆加密的校验卸载 IP ，DMA 也是相对简单一些的 AXI DMA 而非 MCDMA ，整体 Block Design 更简单明了一些，于是就参考这个了。Rocket 里面需要从 L2 Frontend 这里拉出来一个 AXI Slave 端口，供 DMA 访问。有点奇怪的是内存和 MMIO 的 Master 节点可以直接加配置拉出来，但是 Slave 节点就需要再加个 Flipped 翻转一下 Sink/Source 方向。
+
+和 ZFL 交流，决定让他来搞软件这边的适配，主要是 Xilinx 网卡和 DMA 的驱动，考虑先直接把 linux-xlnx 交叉编译到 RV64 这边（这样最快验证硬件和驱动），然后再把这两个驱动迁移到 Uintr Linux 里面。
+
+发现如果 NFS 的文件所有权配置不太对的话，在 Vivado GUI 里综合会卡住，但命令行可以跑；改用 NFSv3 之后 GUI 里也可以正常综合了。
+
 ## 2023.5.18
 
 在板子上跑起来了 10G 网卡的样例设计，主要解决两个问题：
