@@ -1,5 +1,11 @@
 # 用户态中断 开发日志
 
+## 2023.6.1
+
+Rocket + AXI DMA + 10G 网卡能够运行 Linux 并且驱动网卡，arp, ping, nc 和 iperf 都可以运行，不过速率很低，大概只有 50Mbps 。主要调试时钟问题，发现板子上生成的时钟和手册还有 Vivado 里的设计的稍微有一些不一样，例如 PL 部分的参考时钟实际输出的是 50M ，而不是 Block Design 里填的 100M ，这样就能解释之前 Rocket 这边串口波特率只有一半的问题了。推测是这个时钟是 PS 核在 FSBL 阶段配置的，只刷比特流改不了。另外 MGT 参考时钟似乎也没输出，需要用板子的配置工具改一下。设备树节点里的时钟配置也有些问题。
+
+之后可能考虑加 L2 缓存、增加 Rocket 核数，以及提高主频，看网卡的利用率能不能再高一些，现在双核 50M 主频，开两个 iperf 已经把处理器跑满了。
+
 ## 2023.5.25
 
 把 10G 网卡和 DMA 连到 Rocket 核上，能够生成比特流了。连的过程中发现了另一个 10G 网卡的样例项目 [ZCU102 PS and PL based 1G/10G Ethernet](https://github.com/Xilinx-Wiki-Projects/ZCU102-Ethernet/) ，没有之前项目里的一堆加密的校验卸载 IP ，DMA 也是相对简单一些的 AXI DMA 而非 MCDMA ，整体 Block Design 更简单明了一些，于是就参考这个了。Rocket 里面需要从 L2 Frontend 这里拉出来一个 AXI Slave 端口，供 DMA 访问。有点奇怪的是内存和 MMIO 的 Master 节点可以直接加配置拉出来，但是 Slave 节点就需要再加个 Flipped 翻转一下 Sink/Source 方向。
