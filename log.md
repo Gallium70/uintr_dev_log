@@ -1,10 +1,26 @@
 # 用户态中断 开发日志
 
+## 2023.6.15
+
+准备期末大作业。
+
+把 Rocket 主频拉到 100M 并且增加了两个核试了一下，TCP 发送吞吐增加到了 180Mbps ，接收 90Mbps 。 iperf 里没有看到有调整包大小之类的选项。四核情况下开两个 iperf ，一个核大约 70 的占用率 (soft)，两个核 90 (sys)，一个核空闲，但即使再增加 iperf 进程数量，吞吐率也不会提高了，推测可能是驱动或者内存瓶颈了。
+
+![image](https://github.com/Gallium70/uintr_dev_log/assets/52118815/52fd525a-8763-4da4-87cf-1c05535b3651)
+
+[commit 0859db0](https://github.com/U-interrupt/uintr-rocket-chip/commit/0859db057e9c6ed5aa3d11dc6e603d0423c239fd)
+
+## 2023.6.8
+
+准备期末考试。
+
 ## 2023.6.1
 
 Rocket + AXI DMA + 10G 网卡能够运行 Linux 并且驱动网卡，arp, ping, nc 和 iperf 都可以运行，不过速率很低，大概只有 50Mbps 。主要调试时钟问题，发现板子上生成的时钟和手册还有 Vivado 里的设计的稍微有一些不一样，例如 PL 部分的参考时钟实际输出的是 50M ，而不是 Block Design 里填的 100M ，这样就能解释之前 Rocket 这边串口波特率只有一半的问题了。推测是这个时钟是 PS 核在 FSBL 阶段配置的，只刷比特流改不了。另外 MGT 参考时钟似乎也没输出，需要用板子的配置工具改一下。设备树节点里的时钟配置也有些问题。
 
 之后可能考虑加 L2 缓存、增加 Rocket 核数，以及提高主频，看网卡的利用率能不能再高一些，现在双核 50M 主频，开两个 iperf 已经把处理器跑满了。
+
+[commit 1a89eaa](https://github.com/U-interrupt/uintr-rocket-chip/commit/1a89eaaef95171c61268cb3272c05c7f0ba72fd2)
 
 ## 2023.5.25
 
