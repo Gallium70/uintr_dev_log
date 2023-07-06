@@ -1,5 +1,12 @@
 # 用户态中断 开发日志
 
+## 2023.7.6
+
+用新加的 GPIO 测试用户态外部中断可以正常触发工作 [commit eb079c3](https://github.com/duskmoon314/rv-csr-test/commit/eb079c3a38427f5ec8045517c837931ef4e7e31c) 。发现 ZFL 的网卡驱动没有带 DMA ，暂时还用不了，正在写 DMA 的驱动。
+
+改了 PLIC 和 GPIO 之后，旧的 Linux 测网卡的镜像启动不了，进不去终端，推测是设备树没改导致中断上下文和 PLIC 对不上，另外还需要看 Linux 里面的 PLIC 驱动，可能也需要修改。
+
+
 ## 2023.6.29
 
 把之前测试用户态中断的裸机程序迁移到了新的平台上: [commit 05b994b](https://github.com/duskmoon314/rv-csr-test/commit/03c339d05346c411403fc4c676e77e857b75a28b) 。目前加了个 GPIO 用来触发外部中断，正在看 ZFL 写的网卡的裸机驱动，之后加上去运行。
