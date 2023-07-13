@@ -1,11 +1,16 @@
 # 用户态中断 开发日志
 
+## 2023.7.13
+
+DMA 驱动比预想中要复杂，目前还在编写。不过 EmbeddedSw 这个仓库里的代码看起来好像比 Linux 内核的驱动还要复杂，后面可能考虑直接对着内核驱动改，不看完全裸机的版本了。 [commit db73eb0](https://github.com/duskmoon314/rv-csr-test/commit/db73eb0de9ec6a6e39bbe753528614b5fd47c6f3)
+
+读了两篇 HotOS 23' 的论文，都和协程还有切换有关，看来其他人也在思考类似的问题。
+
 ## 2023.7.6
 
 用新加的 GPIO 测试用户态外部中断可以正常触发工作 [commit eb079c3](https://github.com/duskmoon314/rv-csr-test/commit/eb079c3a38427f5ec8045517c837931ef4e7e31c) 。发现 ZFL 的网卡驱动没有带 DMA ，暂时还用不了，正在写 DMA 的驱动。
 
 改了 PLIC 和 GPIO 之后，旧的 Linux 测网卡的镜像启动不了，进不去终端，推测是设备树没改导致中断上下文和 PLIC 对不上，另外还需要看 Linux 里面的 PLIC 驱动，可能也需要修改。
-
 
 ## 2023.6.29
 
