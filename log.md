@@ -1,5 +1,9 @@
 # 用户态中断 开发日志
 
+## 2023.7.20
+
+AXI DMA 驱动和网卡驱动基本上完成了，正在调试。感觉 DMA 和 Rust 比较强的内存安全模型还是存在一定的冲突，正在学习 embedded rust 和 Embassy 里面关于 DMA 的设计。驱动调通之后考虑整合一个 SmolTcp 进去。
+
 ## 2023.7.13
 
 DMA 驱动比预想中要复杂，目前还在编写。不过 EmbeddedSw 这个仓库里的代码看起来好像比 Linux 内核的驱动还要复杂，后面可能考虑直接对着内核驱动改，不看完全裸机的版本了。 [commit db73eb0](https://github.com/duskmoon314/rv-csr-test/commit/db73eb0de9ec6a6e39bbe753528614b5fd47c6f3)
