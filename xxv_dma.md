@@ -73,3 +73,11 @@ DMA IP 的操作流程如下：
    用户只有在 DMA 传输完成之后才能从 `Transfer` 对象中重新获取缓冲区对象。此外，驱动要求缓冲区有 `\`static` 类型的生命周期。这两点设计可供参考。
 2. 多个缓冲区、DMA 帧和描述符的情景尚未测试，目前样例程序中仅进行了单次传输。
 3. 未整合网络协议栈。
+
+## 参考
+
+1. [Xilinx Embedded Software](https://github.com/Xilinx/embeddedsw)
+2. [10G/25G High Speed Ethernet Subsystem Product Guide (PG210)](https://docs.xilinx.com/r/en-US/pg210-25g-ethernet)
+3. [AXI DMA LogiCORE IP Product Guide (PG021)](https://docs.xilinx.com/r/en-US/pg021_axi_dma)
+4. [xxv-pac](https://github.com/zflcs/rCore-N/tree/main/pac/xxv-pac) & [xxvethernet driver](https://github.com/zflcs/rCore-N/blob/main/os/src/device/net/xxvethernet.rs)
+5. [DMA - The Embednomicon](https://docs.rust-embedded.org/embedonomicon/dma.html)
