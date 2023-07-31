@@ -4,6 +4,10 @@
 
 继续调试驱动，AXI DMA 发送 (MM2S) 能工作，DMA 发送完成后产生中断，提交到 DMA 的块描述符可以正常被标记回收，但网卡似乎还有问题，开回环模式 DMA S2MM 收不到，关闭回环在电脑上也抓不到包。[commit 1825058](https://github.com/duskmoon314/rv-csr-test/commit/18250587bb289a0fdc65ce33d57519b7bb2bb794)
 
+更新：
+
+2023.7.28: 以太网和 DMA 已可正常工作，详情参考 [Xilinx 10G/25G 以太网及 AXI DMA IP 裸机驱动开发记录](xxv_dma.md) 及 [commit 2aef0bf](https://github.com/duskmoon314/rv-csr-test/commit/2aef0bf1655df041ef655bec1b9c43b71ce94fa9) 。
+
 ## 2023.7.20
 
 AXI DMA 驱动和网卡驱动基本上完成了，正在调试。感觉 DMA 和 Rust 比较强的内存安全模型还是存在一定的冲突，正在学习 embedded rust 和 Embassy 里面关于 DMA 的设计。驱动调通之后考虑整合一个 SmolTcp 进去。
