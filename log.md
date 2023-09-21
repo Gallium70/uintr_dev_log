@@ -1,5 +1,13 @@
 # 用户态中断 开发日志
 
+## 2023.9.21
+
+读论文：Lightweight Kernel Isolation with Virtualization and VM Functions (VEE 20')
+
+测试带网卡的硬件分支在四核 100M 主频下能否在不加 ILA Debug Core 的情况下稳定运行 （TKF 反馈不带网卡的版本已经可以），如果可以的话考虑合并分支。
+
+考虑如果将用户态外部中断用于微内核的驱动是否会有合适的应用场景。
+
 ## 2023.7.27
 
 继续调试驱动，AXI DMA 发送 (MM2S) 能工作，DMA 发送完成后产生中断，提交到 DMA 的块描述符可以正常被标记回收，但网卡似乎还有问题，开回环模式 DMA S2MM 收不到，关闭回环在电脑上也抓不到包。[commit 1825058](https://github.com/duskmoon314/rv-csr-test/commit/18250587bb289a0fdc65ce33d57519b7bb2bb794)
