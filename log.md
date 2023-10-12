@@ -1,5 +1,15 @@
 # 用户态中断 开发日志
 
+## 2023.10.12
+
+读论文: [Towards Fast, Adaptive, and Hardware-Assisted User-Space Scheduling](https://arxiv.org/abs/2308.02896) ，利用 x86 用户态中断实现抢占式调度，基本上是用户态中断版本的 Shinjuku。预印本，不清楚具体发表在哪，不过作者之一也是 Shinjuku 的作者。
+
+读 ZFL 的论文，提了一些修改意见。
+
+确认带网卡的 rocket 可以在 100M 下运行，已合并进主分支。 [commit 2278398](https://github.com/U-interrupt/uintr-rocket-chip/commit/2278398afd15ca66e958384244a1f7e72138ff6c)
+
+读 TKF 适配的 seL4 的代码。
+
 ## 2023.9.21
 
 读论文：Lightweight Kernel Isolation with Virtualization and VM Functions (VEE 20')
