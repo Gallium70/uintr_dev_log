@@ -6,6 +6,8 @@
 
 seL4 似乎是支持过 rust ，但是又废弃了 https://docs.sel4.systems/projects/rust/ 。目前另有 [Robigalia](https://rbg.systems/) 项目支持在 seL4 上用 rust 开发应用，不过可能和 C 库集成比较麻烦；Robigalia 下面依赖的几个底层库似乎多年没有更新，不过 seL4 本身版本发布也慢，最新的 Release 是 2021 年的 [12.1.0](https://github.com/seL4/seL4/releases/tag/12.1.0) 。但 TKF 好像当初是直接从 master fork 出来的，兼容性上需要再测试一下。
 
+读了 seL4 的白皮书，在看 Genode 框架的介绍。
+
 ## 2023.10.12
 
 读论文: [Towards Fast, Adaptive, and Hardware-Assisted User-Space Scheduling](https://arxiv.org/abs/2308.02896) ，利用 x86 用户态中断实现抢占式调度，基本上是用户态中断版本的 Shinjuku。预印本，不清楚具体发表在哪，不过作者之一也是 Shinjuku 的作者。
