@@ -1,5 +1,15 @@
 # 用户态中断 开发日志
 
+## 2023.11.2
+
+放弃 Robigalia，换到 [rust-sel4](https://github.com/seL4/rust-sel4) 。这个项目[支持的版本](https://github.com/seL4/rust-sel4#compatible-versions-of-related-sel4-foundation-projects)刚好在 TKF 从 sel4 master 上 fork 的位置附近（相差一个 commit ），不需要再考虑折腾老版本 sel4 了（12.0.0 甚至用的还是 BBL）。开发者维护也相当活跃，一个人不到一年交了 800+ commit, 30k+ sloc ，适配了 smoltcp, microkit, sddf ring buffer, async 等一大堆玩意。
+
+跑起来了 rust-sel4 的 root-task-demo 。仓库里的 kernel loader 不太好使，用 CMake 和 corrosion 把 C 版本的 elfloader 和 Rust 的 roottask 粘到一起了。
+
+看了下 [Concord 的代码](https://github.com/dslab-epfl/concord) ，发现比预想的还要简单一点。
+
+在看 seL4 的手册和 virtio-driver 的代码，了解 seL4 上内存分配和中断处理怎么做的，预计下周可以把 xxv 网卡驱动移植过去。
+
 ## 2023.10.26
 
 Robigalia 支持到 seL4 12.0.0，在 git 里对比了一下，12.0.0 到 12.1.0 变化不是特别大，但是 12.1.0 到最新的 master 累积了差不多两年半的开发，变动比较大，并且还没有发新的版本号和发布窗口，应该还没有稳定。试着把 Robigalia 适配最新的 master ，感觉有点困难，所以现在将之前 TKF 的修改反向移植到 12.1.0 版本上。目前代码修改完了，准备测试。
