@@ -1,10 +1,16 @@
 # 用户态中断 开发日志
 
+## 2023.11.9
+
+在 seL4 上运行起来了基于 Notification 的 xxv 网卡驱动 demo。[代码仓库](https://github.com/U-interrupt/rust-sel4-xxv-demo) 。目前代码还比较丑陋。下周预计可以实现基于用户态外部中断的版本。
+
+![image](https://github.com/Gallium70/uintr_dev_log/assets/52118815/aa42e779-2698-4d93-9655-3e26d07b35bd)
+
 ## 2023.11.2
 
 放弃 Robigalia，换到 [rust-sel4](https://github.com/seL4/rust-sel4) 。这个项目[支持的版本](https://github.com/seL4/rust-sel4#compatible-versions-of-related-sel4-foundation-projects)刚好在 TKF 从 sel4 master 上 fork 的位置附近（相差一个 commit ），不需要再考虑折腾老版本 sel4 了（12.0.0 甚至用的还是 BBL）。开发者维护也相当活跃，一个人不到一年交了 800+ commit, 30k+ sloc ，适配了 smoltcp, microkit, sddf ring buffer, async 等一大堆玩意。
 
-跑起来了 rust-sel4 的 root-task-demo 。仓库里的 kernel loader 不太好使，用 CMake 和 corrosion 把 C 版本的 elfloader 和 Rust 的 roottask 粘到一起了。
+跑起来了 rust-sel4 的 root-task-demo 。仓库里的 kernel loader 不太好使，用 CMake 和 corrosion 把 C 版本的 elfloader 和 Rust 的 roottask 粘到一起了 [commit 6417556](https://github.com/U-interrupt/rust-root-task-demo/commit/6417556fe41501dbc0084c3d588a83d353343b7c)。
 
 看了下 [Concord 的代码](https://github.com/dslab-epfl/concord) ，发现比预想的还要简单一点。
 
