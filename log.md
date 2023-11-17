@@ -1,5 +1,13 @@
 # 用户态中断 开发日志
 
+## 2023.11.16
+
+基于用户态中断的驱动还在开发中。在读 virtio-driver 和 ixy.rs 的代码，考虑怎么重构驱动更合理一些。
+
+作为微内核 seL4 本身没有提供内存管理和进程管理的模块，C 版本有用户态库 simple, allocman 和 vka 等做支持，rust 框架这边暂时没有，在考虑是照着写一个 rust 版还是用 ffi 怼上去再说。
+
+读 SOSP 23 论文 [TreeSLS](https://dl.acm.org/doi/pdf/10.1145/3600006.3613160) ，[笔记](https://gallium70.github.io/paper-reading/2023/sosp23-treesls.html) ，关于微内核的全系统持久化单层存储，是基于 ChCore 实现的。
+
 ## 2023.11.9
 
 在 seL4 上运行起来了基于 Notification 的 xxv 网卡驱动 demo。[代码仓库](https://github.com/U-interrupt/rust-sel4-xxv-demo) 。目前代码还比较丑陋。下周预计可以实现基于用户态外部中断的版本。
